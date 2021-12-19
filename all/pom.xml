@@ -72,7 +72,7 @@
                     <groupId>com.puppycrawl.tools</groupId>
                     <artifactId>checkstyle</artifactId>
                   </exclusion>
-                </exclusions> 
+                </exclusions>
               </dependency>
               <dependency>
                 <groupId>com.puppycrawl.tools</groupId>
