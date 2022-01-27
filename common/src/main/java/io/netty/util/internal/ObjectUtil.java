@@ -96,9 +96,11 @@ public final class ObjectUtil {
      * Otherwise, returns the argument.
      */
     public static int checkPositive(int i, String name) {
+        // 如果线程数量小于等于0抛出异常
         if (i <= INT_ZERO) {
             throw new IllegalArgumentException(name + " : " + i + " (expected: > 0)");
         }
+        // 返回线程数
         return i;
     }
 

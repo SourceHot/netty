@@ -58,6 +58,7 @@ import java.util.Map;
  * An NIO datagram {@link Channel} that sends and receives an
  * {@link AddressedEnvelope AddressedEnvelope<ByteBuf, SocketAddress>}.
  *
+ * 基于异步UDP的Channel实现
  * @see AddressedEnvelope
  * @see DatagramPacket
  */

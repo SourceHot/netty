@@ -26,18 +26,23 @@ import java.util.concurrent.TimeUnit;
  * via its {@link #next()} method. Besides this, it is also responsible for handling their
  * life-cycle and allows shutting them down in a global fashion.
  *
+ * 时间执行器组别
  */
 public interface EventExecutorGroup extends ScheduledExecutorService, Iterable<EventExecutor> {
 
     /**
      * Returns {@code true} if and only if all {@link EventExecutor}s managed by this {@link EventExecutorGroup}
      * are being {@linkplain #shutdownGracefully() shut down gracefully} or was {@linkplain #isShutdown() shut down}.
+     *
+     * 当前组别中的EventExecutor是否全部关闭
      */
     boolean isShuttingDown();
 
     /**
      * Shortcut method for {@link #shutdownGracefully(long, long, TimeUnit)} with sensible default values.
      *
+     *
+     * 发出关闭信号
      * @return the {@link #terminationFuture()}
      */
     Future<?> shutdownGracefully();
@@ -49,9 +54,11 @@ public interface EventExecutorGroup extends ScheduledExecutorService, Iterable<E
      * (usually a couple seconds) before it shuts itself down.  If a task is submitted during the quiet period,
      * it is guaranteed to be accepted and the quiet period will start over.
      *
+     * 发出关闭信号
      * @param quietPeriod the quiet period as described in the documentation
      * @param timeout     the maximum amount of time to wait until the executor is {@linkplain #shutdown()}
      *                    regardless if a task was submitted during the quiet period
+     *                    等待关闭的最长时间，到达直接关闭
      * @param unit        the unit of {@code quietPeriod} and {@code timeout}
      *
      * @return the {@link #terminationFuture()}
@@ -61,6 +68,8 @@ public interface EventExecutorGroup extends ScheduledExecutorService, Iterable<E
     /**
      * Returns the {@link Future} which is notified when all {@link EventExecutor}s managed by this
      * {@link EventExecutorGroup} have been terminated.
+     *
+     * 获取当前组别中EventExecutor接口的停止通知
      */
     Future<?> terminationFuture();
 

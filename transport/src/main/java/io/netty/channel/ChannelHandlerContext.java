@@ -83,6 +83,10 @@ import io.netty.util.concurrent.EventExecutor;
  * {@link ChannelPipeline} to find out more about inbound and outbound operations,
  * what fundamental differences they have, how they flow in a  pipeline,  and how to handle
  * the operation in your application.
+ *
+ * <p>
+ * 通道处理程序上下文
+ * </p>
  */
 public interface ChannelHandlerContext extends AttributeMap, ChannelInboundInvoker, ChannelOutboundInvoker {
 
@@ -93,6 +97,8 @@ public interface ChannelHandlerContext extends AttributeMap, ChannelInboundInvok
 
     /**
      * Returns the {@link EventExecutor} which is used to execute an arbitrary task.
+     *
+     * 获取EventExecutor
      */
     EventExecutor executor();
 
@@ -100,11 +106,14 @@ public interface ChannelHandlerContext extends AttributeMap, ChannelInboundInvok
      * The unique name of the {@link ChannelHandlerContext}.The name was used when then {@link ChannelHandler}
      * was added to the {@link ChannelPipeline}. This name can also be used to access the registered
      * {@link ChannelHandler} from the {@link ChannelPipeline}.
+     *
+     * 唯一名称
      */
     String name();
 
     /**
      * The {@link ChannelHandler} that is bound this {@link ChannelHandlerContext}.
+     * 获取ChannelHandler
      */
     ChannelHandler handler();
 
