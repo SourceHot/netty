@@ -105,16 +105,21 @@ public abstract class MultithreadEventExecutorGroup extends AbstractEventExecuto
                 // TODO: Think about if this is a good exception type
                 throw new IllegalStateException("failed to create a child event loop", e);
             } finally {
-                // 如果
+                // 如果创建失败
                 if (!success) {
+                    // 将当前失败之前的所有事件执行器关闭
                     for (int j = 0; j < i; j++) {
                         children[j].shutdownGracefully();
                     }
 
+                    // 将当前失败之前的所有事件执行器进行处理
                     for (int j = 0; j < i; j++) {
+                        // 获取事件执行器
                         EventExecutor e = children[j];
                         try {
+                            // 如果事件执行器中还有任务
                             while (!e.isTerminated()) {
+                                // 阻塞关闭，等待数据处理
                                 e.awaitTermination(Integer.MAX_VALUE, TimeUnit.SECONDS);
                             }
                         } catch (InterruptedException interrupted) {
@@ -127,17 +132,21 @@ public abstract class MultithreadEventExecutorGroup extends AbstractEventExecuto
             }
         }
 
+        // 创建事件执行选择器
         chooser = chooserFactory.newChooser(children);
 
+        // 创建终止监听器
         final FutureListener<Object> terminationListener = new FutureListener<Object>() {
             @Override
             public void operationComplete(Future<Object> future) throws Exception {
+                // 成员变量terminatedChildren中的数据和成员变量children长度一样则将调用成员变量terminationFuture提供的setSuccess方法
                 if (terminatedChildren.incrementAndGet() == children.length) {
                     terminationFuture.setSuccess(null);
                 }
             }
         };
 
+        // 为所有事件处理器添加监听器
         for (EventExecutor e : children) {
             e.terminationFuture().addListener(terminationListener);
         }
@@ -172,6 +181,8 @@ public abstract class MultithreadEventExecutorGroup extends AbstractEventExecuto
     /**
      * Create a new EventExecutor which will later then accessible via the {@link #next()}  method. This method will be
      * called for each thread that will serve this {@link MultithreadEventExecutorGroup}.
+     *
+     * 创建事件执行器
      */
     protected abstract EventExecutor newChild(Executor executor, Object... args) throws Exception;
 

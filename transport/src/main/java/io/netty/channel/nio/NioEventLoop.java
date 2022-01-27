@@ -155,6 +155,9 @@ public final class NioEventLoop extends SingleThreadEventLoop {
         return queueFactory.newTaskQueue(DEFAULT_MAX_PENDING_TASKS);
     }
 
+    /**
+     * 选择器元组
+     */
     private static final class SelectorTuple {
         final Selector unwrappedSelector;
         final Selector selector;
@@ -171,6 +174,7 @@ public final class NioEventLoop extends SingleThreadEventLoop {
     }
 
     private SelectorTuple openSelector() {
+
         final Selector unwrappedSelector;
         try {
             unwrappedSelector = provider.openSelector();
